@@ -4,6 +4,8 @@ import platform
 import venv
 import argparse
 from pathlib import Path
+from typing import Dict, List, Optional
+
 
 
 # Default packages with their latest stable versions
@@ -65,15 +67,29 @@ def yellow(text): return f"\033[93m{text}\033[0m"
 def red(text):    return f"\033[91m{text}\033[0m"
 def bold(text):   return f"\033[1m{text}\033[0m"
 def dim(text):    return f"\033[2m{text}\033[0m"
-def cyan(text):   return f"\033[96m{text}\033[0m"
+def cyan(text: str) -> str:   return f"\033[96m{text}\033[0m"
 
 
-def step(msg):  print(f"  {green('✓')} {msg}")
-def info(msg):  print(f"  {dim('→')} {msg}")
-def warn(msg):  print(f"  {yellow('⚠')} {msg}")
-def error(msg):
+def step(msg: str) -> None:
+    """Print a success message with a green checkmark."""
+    print(f"  {green('✓')} {msg}")
+
+
+def info(msg: str) -> None:
+    """Print an informational message with a dim arrow."""
+    print(f"  {dim('→')} {msg}")
+
+
+def warn(msg: str) -> None:
+    """Print a warning message with a yellow warning sign."""
+    print(f"  {yellow('⚠')} {msg}")
+
+
+def error(msg: str) -> None:
+    """Print an error message and exit the process."""
     print(f"  {red('✗')} {msg}")
     sys.exit(1)
+
 
 
 def get_pip_path(project_path: Path) -> str:
@@ -108,7 +124,7 @@ def parse_packages(args: list) -> dict:
     return packages
 
 
-def build_install_list(packages: dict) -> list:
+def build_install_list(packages: Dict[str, Optional[str]]) -> List[str]:
     """Turn {name: version} dict into pip install strings."""
     result = []
     for name, version in packages.items():
@@ -117,6 +133,7 @@ def build_install_list(packages: dict) -> list:
         else:
             result.append(name)
     return result
+
 
 
 def show_packages_list():
@@ -588,9 +605,13 @@ def main():
             from importlib.metadata import version as pkg_version
             ver = pkg_version("mlnew")
         except Exception:
-            ver = "unknown"
+            try:
+                from mlnew import __version__ as ver
+            except ImportError:
+                ver = "unknown"
         print(f"  mlnew version {ver}")
         return
+
 
     if args.help or not args.command:
         print()
