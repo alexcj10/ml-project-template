@@ -1,9 +1,9 @@
 <div align="center">
-<img src="assets/logo.svg" width="400" alt="Vantix">
+<img src="https://raw.githubusercontent.com/alexcj10/vantix/main/assets/logo.svg" width="400" alt="Vantix">
 
 **Professional ML project scaffolding CLI — one command, zero config.**
 
-[![Version](https://img.shields.io/badge/version-1.2.8-blue)](https://pypi.org/project/vantix/)
+[![Version](https://img.shields.io/badge/version-1.2.9-blue)](https://pypi.org/project/vantix/)
 
 </div>
 
