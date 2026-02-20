@@ -1,156 +1,159 @@
+<div align="center">
+
 # mlnew
 
-[![PyPI version](https://img.shields.io/pypi/v/mlnew.svg)](https://pypi.org/project/mlnew/)
+**Professional ML project scaffolding CLI — one command, zero config.**
 
-One command ML project scaffolding CLI. Works on Windows, Mac, and Linux.
+[![PyPI](https://img.shields.io/pypi/v/mlnew)](https://pypi.org/project/mlnew/)
+[![Python](https://img.shields.io/pypi/pyversions/mlnew)](https://pypi.org/project/mlnew/)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-## Install
+</div>
+
+## Quick Start
 
 ```bash
 pip install mlnew
 ```
 
-> **Tip**: Always run `pip install --upgrade mlnew` (or `pip install -U mlnew`) to ensure you have the latest version.
-> The upgrade flag can go before or after the package name.
-
-## Usage
-
 ```bash
-mlnew init project_name
+mlnew init my_project
 ```
 
-That single command will:
+That's it. Your entire ML workspace is ready.
 
-- Create the project folder
-- Create all directories — `data`, `src`, `notebooks`, `configs`, `logs`, `tests`
-- Create all required files — `.gitignore`, `.env`, `config.yaml`, `train.py`, `eda.ipynb`
-- Generate `SETUP_GUIDE.md` — full manual reference inside every project
-- Create and configure a virtual environment inside `.venv`
-- Upgrade `pip`, `setuptools`, `wheel`
-- Install common ML dependencies with pinned versions
-- Save `requirements.txt`
-- Generate a `README.md`
-- Initialize a Git repository with an initial commit
+> Run `pip install -U mlnew` to always get the latest version.
 
-## Version Control
+## What It Does
 
-By default mlnew installs pinned, stable versions of every package. You can override any of them with `--pkg`.
+A single `mlnew init` command will:
+
+| Step | Action |
+|:--:|:--|
+| 1 | Create a professional folder structure (`data`, `src`, `notebooks`, `configs`, `logs`, `tests`) |
+| 2 | Generate essential files (`.gitignore`, `.env`, `config.yaml`, `train.py`, `eda.ipynb`) |
+| 3 | Include a full `SETUP_GUIDE.md` manual inside every project |
+| 4 | Set up a virtual environment (`.venv`) with `pip`, `setuptools`, `wheel` |
+| 5 | Install 10 core ML/DS packages (NumPy, Pandas, Scikit-learn, etc.) |
+| 6 | Pin exact versions in `requirements.txt` |
+| 7 | Generate a project-specific `README.md` |
+| 8 | Initialize Git with an initial commit |
+
+## Default Packages
+
+All packages install the **latest compatible version** automatically.
+
+| Package | Description |
+|:--|:--|
+| `numpy` | Numerical computing |
+| `pandas` | Data manipulation |
+| `scikit-learn` | Machine learning algorithms |
+| `matplotlib` | Visualization |
+| `seaborn` | Statistical visualization |
+| `jupyter` | Interactive notebooks |
+| `mlflow` | Experiment tracking |
+| `fastapi` | REST API framework |
+| `uvicorn` | ASGI server |
+| `python-dotenv` | Environment variable management |
 
 ```bash
-# Use all defaults
-mlnew init my_project
+mlnew packages     # View all defaults anytime
+```
 
+## Customize Packages
+
+Override any default or add new packages with `--pkg`:
+
+```bash
 # Pin specific versions
 mlnew init my_project --pkg numpy==1.24.0 --pkg pandas==2.0.0
 
 # Install latest (no pin)
 mlnew init my_project --pkg numpy==latest
 
-# Add a package not in the defaults
+# Add packages not in defaults
 mlnew init my_project --pkg torch --pkg transformers
 
 # Mix and match
 mlnew init my_project --pkg numpy==1.24.0 --pkg torch --pkg transformers==4.40.0
 ```
 
-## Default Packages
-
-| Package | Default Version |
-|---|---|
-| numpy | latest |
-| pandas | latest |
-| scikit-learn | latest |
-| matplotlib | latest |
-| seaborn | latest |
-| jupyter | latest |
-| mlflow | latest |
-| fastapi | latest |
-| uvicorn | latest |
-| python-dotenv | latest |
-
-See all defaults anytime:
-
-```bash
-mlnew packages
-```
-
-## Project Structure Created
+## Project Structure
 
 ```
-project_name/
-├── .venv/                 Virtual environment (auto-generated, never touch)
+my_project/
+├── .venv/                 Virtual environment (auto-created)
 ├── data/
-│   ├── raw/               Original, untouched data.
-│   └── processed/         Cleaned and transformed data.
+│   ├── raw/               Original, untouched data
+│   └── processed/         Cleaned and transformed data
 ├── notebooks/
-│   └── eda.ipynb          Exploration and visualization only.
+│   └── eda.ipynb          Exploration and visualization
 ├── src/
-│   ├── features/          Feature engineering logic.
-│   ├── models/            Model definition.
+│   ├── features/          Feature engineering
+│   ├── models/            Model definitions
 │   ├── training/
-│   │   └── train.py       Main training entry point.
-│   └── inference/         Prediction and serving logic.
+│   │   └── train.py       Training entry point
+│   └── inference/         Prediction and serving
 ├── configs/
-│   └── config.yaml        All settings and hyperparameters.
-├── logs/                  Training logs.
-├── tests/                 Unit and integration tests.
-├── .env                   Secret keys. Never commit.
+│   └── config.yaml        Settings and hyperparameters
+├── logs/                  Training logs
+├── tests/                 Unit and integration tests
+├── .env                   Secrets (never committed)
 ├── .gitignore
-├── requirements.txt
-├── SETUP_GUIDE.md         Full manual setup reference.
+├── requirements.txt       Pinned dependencies
+├── SETUP_GUIDE.md         Full manual reference
 └── README.md
 ```
 
 ## After Setup
 
 ```bash
-cd project_name
+cd my_project
 
-# Mac / Linux
-source .venv/bin/activate
+# Activate virtual environment
+source .venv/bin/activate          # Mac / Linux
+.venv\Scripts\Activate.ps1         # Windows (PowerShell)
 
-# Windows (PowerShell)
-.venv\Scripts\Activate.ps1
-
-# Run training
+# Start training
 python src/training/train.py
 ```
 
 ## All Commands
 
-```bash
-mlnew init <project_name>               Create project with default packages
-mlnew init <project_name> --pkg <spec>  Override specific package versions
-mlnew packages                          List all default packages and versions
-mlnew --version                         Show version
-mlnew --help                            Show help
-```
+| Command | Description |
+|:--|:--|
+| `mlnew init <name>` | Create project with default packages |
+| `mlnew init <name> --pkg <spec>` | Override specific packages |
+| `mlnew packages` | List default packages and versions |
+| `mlnew --version` | Show version |
+| `mlnew --help` | Show help |
 
 ## Requirements
 
-- Python 3.8 or higher
-- Git (optional, for auto git init)
+- **Python** 3.8+
+- **Git** (optional, for auto `git init`)
 
 ## Troubleshooting
 
-### Command not found: `mlnew`
+<details>
+<summary><b>Command not found: <code>mlnew</code> (Windows)</b></summary>
 
-If you see `mlnew: The term 'mlnew' is not recognized...` on Windows, it means your Python Scripts folder is not in your system PATH.
+If you see `mlnew: The term 'mlnew' is not recognized...`, your Python Scripts folder is not in PATH.
 
-**Option 1: Fix PATH (Recommended)**
-1. Search Windows for "Edit the system environment variables".
-2. Click "Environment Variables".
-3. Under "User variables", find `Path` and click "Edit".
-4. Add the path to your Python Scripts folder (e.g., `C:\Users\YourName\AppData\Roaming\Python\Python312\Scripts` or similar).
-5. restart your terminal.
+**Fix PATH (Recommended):**
+1. Search Windows for *"Edit the system environment variables"*
+2. Click *"Environment Variables"*
+3. Under *"User variables"*, find `Path` and click *"Edit"*
+4. Add your Python Scripts folder (e.g., `C:\Users\YourName\AppData\Roaming\Python\Python313\Scripts`)
+5. Restart your terminal
 
-**Option 2: Use Python Module directly**
-You can always run the tool via python without fixing PATH:
-
+**Or use Python module directly:**
 ```bash
 python -m mlnew init my_project
 ```
 
+</details>
+
 ## License
 
-MIT
+[MIT](LICENSE)
