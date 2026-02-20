@@ -157,6 +157,10 @@ def create_project(project_name: str, packages: dict):
         full_path.write_text(content, encoding="utf-8")
     step("Created required files  →  .gitignore, .env, config.yaml, train.py, eda.ipynb")
 
+    # 3b. Write README (Early creation to ensure existence)
+    (project_path / "README.md").write_text(generate_readme(project_name, packages), encoding="utf-8")
+    step("Generated README.md")
+
     # 4. Write SETUP_GUIDE.md (the full manual reference)
     (project_path / "SETUP_GUIDE.md").write_text(generate_setup_guide(), encoding="utf-8")
     step("Generated SETUP_GUIDE.md  →  full manual reference included")
@@ -197,9 +201,9 @@ def create_project(project_name: str, packages: dict):
     (project_path / "requirements.txt").write_text(freeze_result.stdout, encoding="utf-8")
     step("Saved requirements.txt  →  exact versions pinned")
 
-    # 9. Write README
-    (project_path / "README.md").write_text(generate_readme(project_name, packages), encoding="utf-8")
-    step("Generated README.md")
+    # 9. Write README (Moved to step 3b)
+    # (project_path / "README.md").write_text(generate_readme(project_name, packages), encoding="utf-8")
+    # step("Generated README.md")
 
     # 10. Git init
     git_result = subprocess.run(
