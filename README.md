@@ -1,7 +1,6 @@
 # ML Project Setup Guide
 A standard, reproducible setup process for Machine Learning and Data Science projects.
 
----
 
 ## 1. Create Project Folder
 
@@ -17,7 +16,6 @@ mkdir project_name
 cd project_name
 ```
 
----
 
 ## 2. Create Virtual Environment
 
@@ -29,7 +27,6 @@ python -m venv .venv
 
 > Same command works on Windows, Mac, and Linux.
 
----
 
 ## 3. Activate Virtual Environment
 
@@ -50,7 +47,6 @@ source .venv/bin/activate
 
 Once activated, you will see `(.venv)` at the start of your terminal line.
 
----
 
 ## 4. Upgrade Core Python Tools
 
@@ -62,7 +58,6 @@ pip install --upgrade pip setuptools wheel
 
 > Same command works on Windows, Mac, and Linux.
 
----
 
 ## 5. Create Project Folder Structure
 
@@ -94,7 +89,6 @@ mkdir src\training
 mkdir src\inference
 ```
 
----
 
 ## 6. Project Structure Overview
 
@@ -130,7 +124,6 @@ project_name/
 └── README.md                       Project documentation.
 ```
 
----
 
 ## 7. What Code Goes Where
 
@@ -152,7 +145,6 @@ All settings that might change between runs. Nothing gets hardcoded in Python fi
 **`notebooks/`**
 Only for exploration. Once logic is finalized, move it into the appropriate `src/` file. Notebooks are never imported by other code.
 
----
 
 ## 8. Create Required Files
 
@@ -172,7 +164,6 @@ New-Item src\training\train.py -ItemType File
 
 > Do not use `type nul >` in PowerShell. It does not work reliably. Use `New-Item` instead.
 
----
 
 ## 9. Install Common ML / DS Dependencies
 
@@ -183,7 +174,6 @@ pip install mlflow fastapi uvicorn python-dotenv
 
 > Same command works on Windows, Mac, and Linux.
 
----
 
 ## 10. Save Installed Dependencies
 
@@ -195,7 +185,6 @@ pip freeze > requirements.txt
 
 > `requirements.txt` always stays in the project root, never inside `.venv`.
 
----
 
 ## 11. Setup .gitignore
 
@@ -219,7 +208,6 @@ Add-Content .gitignore "*.log"
 
 > Do not use `echo x >> file` in PowerShell. It can corrupt the file encoding. Use `Add-Content` instead.
 
----
 
 ## 12. Write Training Entry Script
 
@@ -233,7 +221,6 @@ if __name__ == "__main__":
     train()
 ```
 
----
 
 ## 13. Run Training Script
 
@@ -246,7 +233,6 @@ python src/training/train.py
 python src\training\train.py
 ```
 
----
 
 ## 14. Initialize Git Repository
 
@@ -258,7 +244,6 @@ git commit -m "Initial ML project setup"
 
 > Same command works on Windows, Mac, and Linux.
 
----
 
 ## 15. Recreate Environment (If .venv Is Deleted)
 
@@ -278,7 +263,6 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
----
 
 ## 16. Deactivate Virtual Environment
 
@@ -288,7 +272,6 @@ deactivate
 
 > Same command works on Windows, Mac, and Linux.
 
----
 
 ## Key Rules
 
@@ -300,6 +283,5 @@ deactivate
 - Never hardcode settings in Python files — use `configs/config.yaml`
 - Never commit `.env` to GitHub
 
----
 
 > Virtual environment isolates dependencies, `requirements.txt` guarantees reproducibility, and a clean folder structure keeps ML projects maintainable and production-ready from day one.
