@@ -143,7 +143,7 @@ If you see `mlnew: The term 'mlnew' is not recognized...` on Windows, it means y
 You can always run the tool via python without fixing PATH:
 
 ```bash
-python -m mlnew.main init my_project
+python -m mlnew init my_project
 ```
 
 ## License
