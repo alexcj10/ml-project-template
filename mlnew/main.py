@@ -186,15 +186,17 @@ def create_project(project_name: str, packages: dict):
     for pkg in install_list:
         info(f"  pip install {pkg}")
 
-    result = subprocess.run(
-        [pip, "install"] + install_list,
-        check=False  # Allow getting return code manually
-    )
-    if result.returncode != 0:
-        warn("Some packages failed to install. Check the output above.")
-        # warn(result.stderr.strip().splitlines()[-1] if result.stderr else "Unknown error")
-    else:
+    try:
+        result = subprocess.run(
+            [pip, "install"] + install_list,
+            check=True,
+            capture_output=True,
+            text=True
+        )
         step(f"Installed {len(install_list)} packages successfully")
+    except subprocess.CalledProcessError as e:
+        warn("Some packages failed to install. Check the output below.")
+        print(dim(e.stderr if e.stderr else "Unknown installation error"))
 
     # 8. Freeze requirements
     freeze_result = subprocess.run([pip, "freeze"], capture_output=True, text=True)
@@ -303,9 +305,18 @@ python src/training/train.py
 
 
 def generate_setup_guide() -> str:
-    guide_path = __import__('pathlib').Path(__file__).parent.parent / "SETUP_GUIDE.md"
-    if guide_path.exists():
-        return guide_path.read_text(encoding="utf-8")
+    # Try multiple common locations to find the guide
+    paths = [
+        Path(__file__).parent.parent / "SETUP_GUIDE.md",  # Local dev / project root
+        Path(__file__).parent / "SETUP_GUIDE.md",         # If packaged inside
+        Path(sys.prefix) / "mlnew" / "SETUP_GUIDE.md",   # Common site-packages location
+    ]
+    
+    for path in paths:
+        if path.exists():
+            return path.read_text(encoding="utf-8")
+    
+    # Fallback minimal guide if file is absolutely not found
     return """\
 # ML Project Setup Guide
 
