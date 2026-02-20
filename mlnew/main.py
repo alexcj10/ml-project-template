@@ -300,8 +300,12 @@ python src/training/train.py
 
 
 def generate_setup_guide() -> str:
+    guide_path = __import__('pathlib').Path(__file__).parent.parent / "SETUP_GUIDE.md"
+    if guide_path.exists():
+        return guide_path.read_text(encoding="utf-8")
     return """\
 # ML Project Setup Guide
+
 A standard, reproducible setup process for Machine Learning and Data Science projects.
 
 ## 1. Create Project Folder
